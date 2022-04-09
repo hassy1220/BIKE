@@ -30,10 +30,13 @@ class PostBikesController < ApplicationController
   end
 
   def index
+    to = Time.current
+    from = (to -6.day)
     tab = params[:key]
     # indexのタグ一覧から飛んできた場合
     if tab.blank?
       @post_bikes = PostBike.all
+      @post_bikes = PostBike.includes(:likes).sort{|b,a|a.likes.size <=>b.likes.size}
       @tags = Tag.all
     else
       @post_bikes = Tag.find_by(id: tab.to_i).post_bikes
