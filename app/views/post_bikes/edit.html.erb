@@ -1,0 +1,17 @@
+<div class="container">
+  <%= form_with model: @post_bike do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name,class:"form-control" %>
+    <%= f.label :opinion %>
+    <%= f.text_area :opinion,class:"form-control",rows: 4 %>
+    <label>排気量</label><br>
+    <%= f.select :engine,{"~50cc"=>0,"50~125cc"=>1,"125~250cc"=>2,"250~400cc"=>3,"400cc~"=>4} %><br>
+    <label>メーカー</label><br>
+    <%= f.select :maker,{"ホンダ"=>0,"スズキ"=>1,"ヤマハ"=>2,"KTM"=>3,"ハーレー"=>4,} %><br>
+    <label>タグ</label>
+    <%= f.text_field :tag_name,placeholder:"複数の場合は,区切りで",class:"form-control" %>
+    <label>画像</label><br>
+    <%= f.file_field :bike_image,accept:"image/jpg" %><br>
+    <%= f.submit"送信" %>
+  <% end %>
+</div>

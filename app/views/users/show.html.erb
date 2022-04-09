@@ -1,0 +1,27 @@
+<div class="container">
+  <div>
+    <h1>USER SHOW</h1>
+    <%= image_tag @user.get_profile_image(200,200) %>
+    <p>NAME:<%= @user.name %></p>
+    <P>INTRODUCTION:<%= @user.introduction %></P>
+    <% if @user == current_user %>
+      <%= link_to"EDIT",edit_user_path(@user.id) %>
+    <% end %>
+  </div>
+  <div>
+    <h1>BIKES</h1>
+    <table>
+      <% @user.post_bikes.each do |bike| %>
+        <tr>
+          <td><%= image_tag bike.get_bike_image(100,100) %></td>
+          <td><%= bike.name %></td>
+          <td><%= bike.opinion %></td>
+          <td><%= bike.get_engine(bike.engine) %></td>
+          <td><%= bike.get_maker(bike.maker) %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+
+</div>

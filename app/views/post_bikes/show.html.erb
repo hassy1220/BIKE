@@ -1,0 +1,38 @@
+<div class="container">
+  <table class="table">
+    <tr>
+      <td><%= image_tag @post_bike.get_bike_image(200,200) %></td>
+    </tr>
+    <tr>
+      <td> <%= @post_bike.name %></td>
+      <td><%= @post_bike.opinion %></td>
+      <td><%= @post_bike.get_engine(@post_bike.engine) %></td>
+      <td> <%= @post_bike.get_maker(@post_bike.maker) %></td>
+      <td>
+        <% @post_bike.tags.each do |tag| %>
+          <%= tag.tag_name %><br>
+        <% end %>
+      </td>
+      <% if @post_bike.user == current_user %>
+        <td><%= link_to"EDIT",edit_post_bike_path(@post_bike.id) %></td>
+      <% end %>
+    </tr>
+  </table>
+
+  <h2>COMMENT</h2>
+  <!--コメント一覧-->
+  <table class="table">
+    <% @post_bike.post_bike_comments.each do |comment| %>
+    <tr>
+      <td><%= image_tag comment.user.get_profile_image(60,60) %></td>
+      <td><%= comment.comment %></td>
+    </tr>
+    <% end %>
+  </table>
+
+  <!--コメント投稿フォーム-->
+  <%= form_with model: @post_bike_comment,url:  post_bike_post_bike_comments_path(@post_bike.id) do |f| %>
+    <%= f.text_area :comment,placeholder:"コメントはここに",rows: 4,class:"form-control" %>
+    <%= f.submit"送信" %>
+  <% end %>
+</div>

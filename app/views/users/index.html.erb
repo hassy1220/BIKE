@@ -1,0 +1,34 @@
+<div class="container">
+  <h1>USER INDEX</h1>
+  <table class="table">
+    <% @users.each do |user| %>
+    <tr>
+      <td><%= image_tag user.get_profile_image(100,100) %></td>
+      <td>
+        NAME：
+        <%= link_to user_path(user.id) do %>
+          <%= user.name %>
+        <% end %>
+      </td>
+      <td>INTRODUCTION：<%= user.introduction %></td>
+      <td>
+      <% unless user == current_user %>
+        <% if user.follows.exists?(id: current_user.id) %>
+          <%= link_to user_relationships_path(user.id),method: :delete do %>
+            解除
+          <% end %>
+        <% else %>
+          <%= link_to user_relationships_path(user.id),method: :post do %>
+            フォロー
+          <% end %>
+        <% end %>
+      <% end %>
+      </td>
+      <td>
+        フォロー<%= user.followeds.count %>人<br>
+        フォロワー<%= user.follows.count %>人
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>

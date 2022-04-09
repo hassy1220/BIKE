@@ -1,0 +1,18 @@
+<div class="container">
+  <h1>PostBikes#new</h1>
+
+  <%= form_with url: post_bikes_path,method: :post do |f| %>
+    <label for="name">NAME</label><br>
+    <%= f.text_field :name,id:"name",placeholder:"名前はここに",class:"form-control" %><br>
+    <label for="opinion">OPINION</label><br>
+    <%= f.text_area :opinion,id:"opinion",rows: 5,placeholder:"説明はここに",class:"form-control" %><br>
+    <label>排気量</label><br>
+    <%= f.select :engine,{"~50cc"=>0,"50~125cc"=>1,"125~250cc"=>2,"250~400cc"=>3,"400cc~"=>4} %><br>
+    <label>メーカー</label><br>
+    <%= f.select :maker,{"ホンダ"=>0,"スズキ"=>1,"ヤマハ"=>2,"KTM"=>3,"ハーレー"=>4,} %><br>
+    <label>タグ</label>
+    <%= f.text_field :tag_name,placeholder:"複数の場合は,区切りで",class:"form-control" %>
+    <%= f.submit"送信" %>
+
+<% end %>
+</div>

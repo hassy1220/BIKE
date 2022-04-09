@@ -1,0 +1,40 @@
+<div class="container">
+  <%= form_with url: search_path,method: :get do |f| %>
+    <%= f.select :model,{"User"=>"User","Bike"=>"Bike"},include_blank: true %>
+    <%= f.search_field :content %>
+    <%= f.submit"検索" %>
+  <% end %>
+
+
+  <% @tags.each do |tag| %>
+    <%= link_to post_bikes_path(key: tag) do %>
+      <%= tag.tag_name %>
+    <% end %>
+  <% end %>
+  <table class="table">
+    <% @post_bikes.each do |post_bike| %>
+      <tr>
+        <td><%= image_tag post_bike.get_bike_image(150,150) %></td>
+        <td>
+          <%= link_to post_bike_path(post_bike.id) do %>
+            <%= post_bike.name %>
+          <% end %>
+        </td>
+        <td><%= post_bike.opinion %></td>
+        <td><%= post_bike.get_maker(post_bike.maker) %></td>
+        <td><%= post_bike.get_engine(post_bike.engine) %></td>
+        <td>
+          <% if post_bike.likes.exists?(id: current_user.id) %>
+            <%= link_to post_bike_favorites_path(post_bike.id),method: :delete do %>
+              💖いいね<%= post_bike.likes.count %>件
+            <% end %>
+          <% else %>
+            <%= link_to post_bike_favorites_path(post_bike.id),method: :post do %>
+              💛いいね<%= post_bike.likes.count %>件
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

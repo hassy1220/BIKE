@@ -1,0 +1,2 @@
+module PostBikeCommentsHelper
+end

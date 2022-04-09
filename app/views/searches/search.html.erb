@@ -1,0 +1,42 @@
+<div class="container">
+  <h1>検索結果</h1>
+  <table class="table">
+    <% if @model == "User" %>
+      <% @record.each do |record| %>
+        <tr>
+          <td><%= image_tag record.get_profile_image(100,100) %></td>
+          <td><%= record.name %></td>
+          <td><%= record.introduction %></td>
+          <td>
+             <% unless record == current_user %>
+              <% if record.follows.exists?(id: current_user.id) %>
+                <%= link_to user_relationships_path(record.id),method: :delete do %>
+                  解除
+                <% end %>
+              <% else %>
+                <%= link_to user_relationships_path(record.id),method: :post do %>
+                  フォロー
+                <% end %>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            フォロー<%= record.followeds.count %>人<br>
+            フォロワー<%= record.follows.count %>人
+          </td>
+        </tr>
+      <% end %>
+    <% elsif @model == "Bike" %>
+      <% @record.each do |record| %>
+        <tr>
+          <td><%= image_tag record.get_bike_image(100,100) %></td>
+          <td><%= record.name %></td>
+          <td><%= record.opinion %></td>
+          <td><%= record.get_engine(record.engine) %></td>
+          <td><%= record.get_maker(record.maker) %></td>
+        </tr>
+
+      <% end %>
+    <% end %>
+  </table>
+</div>

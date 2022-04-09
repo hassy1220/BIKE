@@ -1,0 +1,11 @@
+<div class="container">
+  <%= form_with model: @user do |f| %>
+    <%= f.label :name %><br>
+    <%= f.text_field :name,class:"form-control" %><br>
+    <%= f.label :introduction %><br>
+    <%= f.text_area :introduction,rows: 5,placeholder:"自己紹介はここに",class:"form-control" %><br>
+    <labe>画像</labe><br>
+    <%= f.file_field :profile_image,accept:"image/jpg" %><br>
+    <%= f.submit"変更" %><br>
+  <% end %>
+</div>
