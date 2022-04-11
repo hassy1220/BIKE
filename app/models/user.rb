@@ -14,6 +14,10 @@ class User < ApplicationRecord
   # その人がフォローされた人達一覧
   has_many:follows,through: :followed,source: :followed
 
+  has_many:room_users,dependent: :destroy
+  has_many:rooms,through: :room_users
+  has_many:chats,dependent: :destroy
+
   def get_profile_image(width,height)
     unless profile_image.attached?
       file_path = Rails.root.join("app/assets/images/no-image-icon.jpg")

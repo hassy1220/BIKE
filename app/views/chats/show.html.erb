@@ -1,0 +1,18 @@
+<div class="container">
+  <h1>チャット</h1>
+  <table class="table">
+  <% @room.chats.each do |chat| %>
+　　  <tr>
+　　    <td><%= image_tag chat.user.get_profile_image(50,50) %></td>
+　　    <td><%= chat.comment %></td>
+　　  </tr>
+  <% end %>
+  </table>
+  <h1>コメント</h1>
+  <%= form_with model: @chat,url: user_room_users_chats_path(@user.id) do |f| %>
+    <%= f.text_area :comment,class:"form-control" %>
+    <%= f.submit"送信" %>
+  <% end %>
+
+</div>
+

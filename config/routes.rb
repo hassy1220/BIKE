@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   end
   resources:users,only:[:show,:index,:edit,:update] do
     resource:relationships,only:[:create,:destroy]
+    resource:room_users,only:[:create] do
+     resource:chats,only:[:create,:show]
+    end
   end
   get 'searches/search',as:"search"
   root to: 'homes#home'

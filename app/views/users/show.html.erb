@@ -5,8 +5,88 @@
     <p>NAME:<%= @user.name %></p>
     <P>INTRODUCTION:<%= @user.introduction %></P>
     <% if @user == current_user %>
-      <%= link_to"EDIT",edit_user_path(@user.id) %>
+      <%= link_to"EDIT",edit_user_path(@user.id),class:"btn btn-success" %>
     <% end %>
+    <% if current_user.followeds.exists?(id: @user.id) and @user.followeds.exists?(id: current_user.id) %>
+      <% unless @user == current_user %>
+        <%= link_to"DM",user_room_users_path(@user.id),method: :post,class:"btn btn-success" %>
+      <% end %>
+    <% end %>
+  </div>
+  <div>
+    投稿履歴
+    <table class="table">
+      <tr>
+        <td>今日</td>
+        <td>昨日</td>
+        <td>比率</td>
+        <td>今週</td>
+        <td>先週</td>
+        <td>比率</td>
+      </tr>
+      <tr>
+        <td><%= @today_user_post.count %>件</td>
+        <td><%= @yesterday_user_post.count %>件</td>
+        <td><%= @ratio %></td>
+        <td><%= @week_post_bike.count %></td>
+        <td><%= @weeks_post_bike.count %></td>
+        <td><%= @ratios %></td>
+      </tr>
+    </table>
+    <table class="table">
+      <tr>
+        <td>今日</td>
+        <td>昨日</td>
+        <td>２日毎</td>
+        <td>３日前</td>
+        <td>４日前</td>
+        <td>５日前</td>
+        <td>６日前</td>
+      </tr>
+      <tr>
+        <td><%= @week_today %></td>
+        <td><%= @week_yesterday %></td>
+        <td><%= @week_2day %></td>
+        <td><%= @week_3day %></td>
+        <td><%= @week_4day %></td>
+        <td><%= @week_5day %></td>
+        <td><%= @week_6day %></td>
+      </tr>
+    </table>
+
+    <canvas id="myChart"></canvas>
+　　<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+　　<script>
+  　$(document).on('turbolinks:load', function () {
+　　var ctx = document.getElementById('myChart');
+　  　var myChart = new Chart(ctx, {
+　　    type: 'line',
+    　　data: {
+        　　labels: ['今日', '1日前', '2日前', '3日前', '4日前', '5日前','6日前'],
+          　　datasets: [{
+            　　label: '投稿離席',
+            　　data: [<%= @week_today %>, <%= @week_yesterday %>, <%= @week_2day %>, <%= @week_3day %>, <%= @week_4day %>,<%= @week_5day %>,<%= @week_6day %> ],
+  　　 　　         backgroundColor: [
+           　　     'rgba(255, 99, 132, 0.2)'
+          　　  ],
+            　　borderColor: [
+        　　        'rgba(255, 99, 132, 1)'
+    　　        ],
+        　　　　    borderWidth: 3
+      　 　 }]
+   　　 },
+   　    options: {
+   　　　　     y: {
+   　　　 　       min: 0,
+               max: 10,
+            },
+        },
+　  　});
+　  });
+　</script>
+
+
   </div>
   <div>
     <h1>BIKES</h1>

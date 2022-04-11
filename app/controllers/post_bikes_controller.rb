@@ -26,6 +26,7 @@ class PostBikesController < ApplicationController
 
   def show
     @post_bike = PostBike.find(params[:id])
+    impressionist(@post_bike,nil,unique: [:ip_address])
     @post_bike_comment = PostBikeComment.new
   end
 
@@ -45,6 +46,7 @@ class PostBikesController < ApplicationController
     def edit
       @post_bike = PostBike.find(params[:id])
     end
+    @rank_post_bikes = PostBike.order(impressions_count: 'DESC') # ソート機能を追加
   end
   private
   def post_bike_params
